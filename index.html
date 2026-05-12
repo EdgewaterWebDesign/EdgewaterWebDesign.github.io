@@ -89,7 +89,8 @@
   }
   .hero-skyline {
     position: absolute; bottom: 0; left: 0; right: 0;
-    width: 100%; height: 52%; pointer-events: none; opacity: 0.11;
+    width: 100%; height: 75%; pointer-events: none; opacity: 0.16;
+    overflow: visible;
   }
   .hero-content { position: relative; z-index: 2; max-width: 680px; padding-bottom: 5rem; }
   .hero-eyebrow {
@@ -361,6 +362,38 @@
   .form-success { display: none; text-align: center; padding: 2.5rem; color: var(--navy); font-family: var(--font-display); font-size: 1.5rem; font-weight: 700; }
   .form-success p { color: var(--muted); font-family: var(--font-body); font-size: 1rem; margin-top: 0.75rem; }
 
+  /* FAQ */
+  .faq-list { display: flex; flex-direction: column; gap: 0.75rem; max-width: 860px; }
+  .faq-item {
+    background: white; border: 1px solid var(--border-light); border-radius: 14px;
+    overflow: hidden; transition: box-shadow 0.2s;
+  }
+  .faq-item.open { box-shadow: 0 6px 24px rgba(13,31,45,0.1); }
+  .faq-question {
+    width: 100%; background: none; border: none; padding: 1.4rem 1.75rem;
+    display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+    cursor: pointer; text-align: left;
+    font-family: var(--font-body); font-size: 1rem; font-weight: 700; color: var(--navy);
+    transition: background 0.2s;
+  }
+  .faq-question:hover { background: var(--sand3); }
+  .faq-icon {
+    width: 28px; height: 28px; border-radius: 50%; background: var(--sand3);
+    border: 1px solid var(--border-light); flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.1rem; line-height: 1; color: var(--steel);
+    transition: transform 0.3s, background 0.2s;
+  }
+  .faq-item.open .faq-icon { transform: rotate(45deg); background: var(--navy); color: var(--sand); border-color: var(--navy); }
+  .faq-answer {
+    max-height: 0; overflow: hidden;
+    transition: max-height 0.4s ease, padding 0.3s ease;
+    padding: 0 1.75rem;
+  }
+  .faq-answer-inner { padding-bottom: 1.5rem; color: var(--muted); font-size: 0.97rem; line-height: 1.75; }
+  .faq-answer-inner strong { color: var(--navy); font-weight: 700; }
+  .faq-item.open .faq-answer { max-height: 400px; }
+
   /* FOOTER */
   footer { background: var(--navy); padding: 2.5rem 3rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
   .footer-brand { font-family: var(--font-display); font-size: 1.2rem; font-weight: 700; color: var(--sand); }
@@ -414,48 +447,59 @@
 <!-- HOME -->
 <div class="page active" id="page-home">
   <div class="hero">
-    <!-- Cleveland Skyline -->
-    <svg class="hero-skyline" viewBox="0 0 1440 300" preserveAspectRatio="xMidYMax meet" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#0D1F2D" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round">
-      <!-- Key Tower (tallest) -->
-      <polyline points="716,300 716,52 722,52 722,42 724,42 724,32 727,32 727,22 730,22 730,10 733,10 733,22 736,22 736,32 738,32 738,42 740,42 740,52 746,52 746,300"/>
-      <line x1="730" y1="10" x2="730" y2="0"/><line x1="727" y1="5" x2="733" y2="5"/>
-      <!-- 200 Public Square -->
-      <polyline points="658,300 658,82 662,82 664,72 668,66 672,72 674,82 678,82 678,300"/>
-      <line x1="668" y1="66" x2="668" y2="55"/>
-      <!-- Huntington Building -->
-      <polyline points="758,300 758,78 762,78 768,68 774,62 780,68 784,78 788,78 788,300"/>
-      <line x1="774" y1="62" x2="774" y2="50"/>
-      <!-- 55 Public Square -->
-      <polyline points="620,300 620,104 630,104 630,96 642,96 642,104 652,104 652,300"/>
-      <!-- One Cleveland Center -->
-      <polyline points="582,300 582,118 592,118 592,110 604,110 604,118 614,118 614,300"/>
-      <!-- Ernst & Young -->
-      <polyline points="800,300 800,124 808,124 808,116 818,116 818,124 828,124 828,300"/>
-      <!-- Fifth Third Center -->
-      <polyline points="836,300 836,138 844,138 844,130 854,130 854,138 864,138 864,300"/>
-      <!-- PNC stepped -->
-      <polyline points="542,300 542,134 546,134 546,126 550,126 550,118 556,118 556,126 560,126 560,134 564,134 564,300"/>
-      <!-- Sherwin Williams -->
-      <polyline points="492,300 492,150 500,150 500,142 512,142 512,150 520,150 520,300"/>
-      <!-- Mid-rises right -->
-      <polyline points="872,300 872,150 886,150 886,142 902,142 902,150 918,300"/>
-      <polyline points="928,300 928,162 950,162 950,300"/>
-      <polyline points="958,300 958,170 976,170 976,162 994,162 994,170 1012,300"/>
-      <polyline points="1020,300 1020,178 1046,178 1046,300"/>
-      <polyline points="1054,300 1054,186 1078,186 1078,300"/>
-      <polyline points="1086,300 1086,194 1112,194 1112,300"/>
-      <!-- Mid-rises left -->
-      <polyline points="448,300 448,158 464,158 464,150 480,150 480,158 490,158"/>
-      <polyline points="400,300 400,168 418,168 418,300"/>
-      <polyline points="358,300 358,178 376,178 376,300"/>
-      <polyline points="312,300 312,188 332,188 332,300"/>
-      <polyline points="264,300 264,196 286,196 286,300"/>
-      <!-- Far edges -->
-      <polyline points="214,300 214,210 260,210"/>
-      <polyline points="1120,210 1160,210 1160,300"/>
-      <polyline points="160,300 160,228 214,228"/>
-      <polyline points="1200,228 1248,228 1248,300"/>
-      <line x1="0" y1="300" x2="1440" y2="300"/>
+    <!-- Cleveland Skyline - precisely traced from reference outline -->
+    <svg class="hero-skyline" viewBox="0 0 900 220" preserveAspectRatio="xMidYMax meet" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#0D1F2D" stroke-width="1.3" stroke-linejoin="miter" stroke-linecap="square">
+
+      <!-- Ground line -->
+      <line x1="0" y1="218" x2="900" y2="218"/>
+
+      <!-- FAR LEFT - flat base with small church/chapel structures -->
+      <polyline points="0,218 0,195 12,195 12,185 18,185 18,178 22,178 22,172 24,172 24,165 26,165 26,160 28,160 28,165 30,165 30,172 32,172 32,178 36,178 36,185 44,185 44,195 56,195 56,185 62,185 62,175 66,175 66,168 68,168 68,162 70,162 70,156 72,156 72,150 74,150 74,144 76,144 76,150 78,150 78,156 80,156 80,162 82,162 82,168 84,168 84,175 88,175 88,185 96,185 96,195 110,195"/>
+
+      <!-- Small peaked building / church spire group -->
+      <polyline points="110,218 110,192 118,192 118,185 122,185 122,178 124,178 124,170 126,170 126,162 128,162 128,170 130,170 130,178 132,178 132,185 136,185 136,192 144,192 144,185 148,185 148,178 150,178 150,170 152,170 152,162 154,162 154,156 156,156 156,148 158,148 158,156 160,156 160,162 162,162 162,170 164,170 164,178 166,178 166,185 170,185 170,192 178,192 178,218"/>
+
+      <!-- Gap / low connector -->
+      <polyline points="178,218 178,205 192,205 192,218"/>
+
+      <!-- STEPPED MID-RISE LEFT - tall rectangular tower with stepped top -->
+      <polyline points="192,218 192,155 198,155 198,145 204,145 204,135 210,135 210,125 216,125 216,115 222,115 222,108 228,108 228,102 232,102 232,96 236,96 236,90 240,90 240,96 244,96 244,102 248,102 248,108 252,108 252,115 258,115 258,125 264,125 264,135 270,135 270,145 276,145 276,155 282,155 282,218"/>
+
+      <!-- Building right of stepped tower -->
+      <polyline points="282,218 282,165 292,165 292,155 302,155 302,148 310,148 310,142 318,142 318,135 326,135 326,128 334,128 334,118 340,118 340,128 346,128 346,135 352,135 352,142 360,142 360,148 368,148 368,155 378,155 378,165 388,165 388,218"/>
+
+      <!-- KEY TOWER - tallest, narrow pyramid stepped spire -->
+      <polyline points="388,218 388,162 394,162 394,152 398,152 398,140 402,140 402,128 405,128 405,114 408,114 408,100 410,100 410,86 412,86 412,72 414,72 414,56 416,56 416,42 418,42 418,28 420,28 420,16 422,16 422,8 423,8 423,2 424,2 424,0 425,0 425,2 426,2 426,8 427,8 427,16 429,16 429,28 431,28 431,42 433,42 433,56 435,56 435,72 437,72 437,86 439,86 439,100 441,100 441,114 444,114 444,128 447,128 447,140 451,140 451,152 455,152 455,162 461,162 461,218"/>
+
+      <!-- Small buildings center-left of Key Tower -->
+      <polyline points="461,218 461,175 468,175 468,168 474,168 474,162 480,162 480,155 486,155 486,162 490,162 490,155 494,155 494,148 498,148 498,155 502,155 502,162 508,162 508,168 514,168 514,175 520,175 520,218"/>
+
+      <!-- Angled/slanted top building -->
+      <polyline points="520,218 520,168 526,168 526,158 530,158 530,148 534,148 534,140 538,140 534,128 540,128 544,140 548,140 548,152 552,152 552,162 558,162 558,172 564,172 564,218"/>
+
+      <!-- TERMINAL TOWER area - wide base then gothic spire -->
+      <polyline points="564,218 564,170 570,170 570,160 576,160 576,148 580,148 580,136 584,136 584,122 587,122 587,108 590,108 590,94 592,94 592,80 594,80 594,64 596,64 596,50 597,50 597,38 598,38 598,28 599,28 599,20 600,20 600,14 601,14 601,8 602,8 602,4 603,4 603,2 604,2 604,0 605,0 605,2 606,2 606,4 607,4 607,8 608,8 608,14 609,14 609,20 610,20 610,28 611,28 611,38 612,38 612,50 613,50 613,64 615,64 615,80 617,80 617,94 619,94 619,108 622,108 622,122 625,122 625,136 629,136 629,148 633,148 633,160 639,160 639,170 645,170 645,218"/>
+      <!-- Terminal Tower cross -->
+      <line x1="604" y1="0" x2="604" y2="-5"/>
+      <line x1="601" y1="-3" x2="607" y2="-3"/>
+
+      <!-- Flat buildings right of Terminal Tower -->
+      <polyline points="645,218 645,175 658,175 658,168 672,168 672,162 686,162 686,168 700,168 700,175 712,175 712,218"/>
+
+      <!-- Low connector -->
+      <polyline points="712,218 712,188 724,188 724,180 736,180 736,188 748,188 748,218"/>
+
+      <!-- Right cluster buildings -->
+      <polyline points="748,218 748,175 756,175 756,165 764,165 764,155 772,155 772,148 780,148 780,140 786,140 786,132 792,132 792,125 798,125 798,132 804,132 804,140 810,140 810,148 816,148 816,155 822,155 822,165 828,165 828,175 836,175 836,218"/>
+
+      <!-- Far right low flat buildings -->
+      <polyline points="836,218 836,192 848,192 848,185 860,185 860,192 872,192 872,198 884,198 884,192 892,192"/>
+
+      <!-- Far right house/structure with peaked roof -->
+      <polyline points="852,218 852,200 856,200 856,192 860,192"/>
+      <polyline points="872,218 872,200 876,200 876,195 880,190 884,190 884,195 888,200 888,200 888,218"/>
+      <polyline points="892,192 892,198 900,198 900,218"/>
+
     </svg>
 
     <div class="hero-content">
@@ -498,28 +542,96 @@
     </div>
   </section>
 
+  <section class="section-white">
+    <div class="section-label">FAQ</div>
+    <h2 class="section-title">Common <em>Questions</em></h2>
+    <p class="section-intro">Everything you need to know before getting started. Don't see your question? Just reach out.</p>
+    <div class="faq-list">
+
+      <div class="faq-item" id="faq-1">
+        <button class="faq-question" onclick="toggleFaq('faq-1')">
+          Do clients own their website?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            <strong>Yes — 100%.</strong> When your website is complete, it's yours. You own the domain, the design, the code, and all the content. We believe that once you've paid for something, it belongs to you — no strings attached, no lock-in, no nonsense. If you ever decide to move to a different host or work with a different team in the future, we'll make that transition as smooth as possible.
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item" id="faq-2">
+        <button class="faq-question" onclick="toggleFaq('faq-2')">
+          Does Edgewater Web Design offer hosting and maintenance?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            <strong>Yes!</strong> We offer optional hosting and ongoing maintenance plans so your site stays fast, secure, and up to date after launch. Our maintenance packages include regular software updates, security monitoring, backups, and performance checks. You're never required to use our hosting — but most clients find it convenient to keep everything under one roof with a team that already knows their site inside and out.
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item" id="faq-3">
+        <button class="faq-question" onclick="toggleFaq('faq-3')">
+          How much does Edgewater Web Design charge for a website?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            Every project is different, so we don't believe in one-size-fits-all pricing. A simple 5-page site for a local business will cost significantly less than a full e-commerce build with custom integrations. What we can promise is <strong>transparent, upfront pricing</strong> — no surprise invoices, no hidden fees. We'll give you a detailed quote after our free discovery call once we understand exactly what you need. Reach out and let's talk.
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item" id="faq-4">
+        <button class="faq-question" onclick="toggleFaq('faq-4')">
+          What is the website development process?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            Our process has four clear stages: <strong>(1) Discovery</strong> — we meet with you to learn about your business, goals, competitors, and audience. <strong>(2) Strategy &amp; Design</strong> — we build a custom design and content plan tailored to your brand. <strong>(3) Build &amp; Optimize</strong> — we develop the site with SEO built in from the very first line of code, then review it with you. <strong>(4) Launch &amp; Grow</strong> — we go live together and provide training so you feel confident using your new site. We keep you in the loop at every step.
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item" id="faq-5">
+        <button class="faq-question" onclick="toggleFaq('faq-5')">
+          What is SEO?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            <strong>SEO stands for Search Engine Optimization</strong> — it's the practice of making your website rank higher on Google and other search engines so more people find you organically (without paying for ads). Good SEO means the right people find your site when they search for the products or services you offer. We focus on both <strong>technical SEO</strong> (site speed, structure, code quality) and <strong>local SEO</strong> (helping your business appear in "near me" searches in the Cleveland area and beyond).
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item" id="faq-6">
+        <button class="faq-question" onclick="toggleFaq('faq-6')">
+          Does Edgewater Web Design offer more than just site creation?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            Absolutely. A great website is just the starting point. We also offer <strong>ongoing SEO management</strong>, <strong>Google Ads campaigns</strong>, <strong>social media advertising</strong>, <strong>email marketing</strong>, <strong>content strategy</strong>, and <strong>monthly analytics reporting</strong>. Think of us as your full digital marketing partner — not just a one-time web shop. Many of our clients start with a new site and then work with us on a monthly retainer to keep growing their online presence.
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
   <div class="cta-band">
-    <svg class="cta-skyline" viewBox="0 0 1440 280" preserveAspectRatio="xMidYMax meet" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#E4C3AD" stroke-width="1.5" stroke-linejoin="round">
-      <polyline points="716,280 716,40 730,20 730,8 744,40 746,280"/>
-      <line x1="730" y1="8" x2="730" y2="0"/>
-      <polyline points="658,280 658,68 668,55 678,68 678,280"/>
-      <polyline points="758,280 758,65 774,50 790,65 790,280"/>
-      <polyline points="620,280 620,92 642,92 642,280"/><polyline points="800,280 800,108 822,108 822,280"/>
-      <polyline points="582,280 582,112 604,112 604,280"/><polyline points="836,280 836,128 858,128 858,280"/>
-      <polyline points="870,280 870,148 900,280"/><polyline points="542,280 542,130 558,280"/>
-      <polyline points="490,280 490,155 515,280"/><polyline points="930,280 930,165 960,280"/>
-      <polyline points="440,280 440,168 470,280"/><polyline points="972,280 972,178 1010,280"/>
-      <polyline points="390,280 390,182 420,280"/><polyline points="1020,280 1020,188 1060,280"/>
-      <polyline points="320,280 320,198 360,280"/><polyline points="1070,280 1070,200 1110,280"/>
-      <line x1="0" y1="280" x2="1440" y2="280"/>
+    <svg class="cta-skyline" viewBox="0 0 1440 260" preserveAspectRatio="xMidYMax meet" xmlns="http://www.w3.org/2000/svg">
+      <path fill="#E4C3AD" opacity="0.08" d="M0,260 L0,200 L80,200 L80,190 L140,190 L140,180 L200,180 L200,168 L260,168 L260,155 L300,155 L300,145 L340,145 L340,132 L370,132 L370,120 L400,120 L400,108 L430,108 L430,95 L460,95 L460,82 L490,82 L490,70 L510,70 L510,58 L530,58 L530,48 L545,48 L545,38 L558,38 L558,28 L568,28 L568,18 L578,18 L578,10 L586,10 L586,4 L592,4 L592,0 L596,0 L596,4 L600,4 L600,10 L606,10 L606,18 L614,18 L614,28 L622,28 L622,38 L632,38 L632,28 L640,28 L640,20 L648,20 L648,12 L656,12 L656,4 L662,4 L662,0 L666,0 L666,4 L670,4 L670,12 L676,12 L676,20 L682,20 L682,28 L690,28 L690,38 L700,38 L700,28 L708,28 L708,20 L716,20 L716,12 L722,12 L722,4 L728,4 L728,0 L732,0 L732,4 L738,4 L738,12 L744,12 L744,20 L750,20 L750,28 L758,28 L758,20 L764,20 L764,12 L770,12 L770,4 L776,4 L776,0 L780,0 L780,4 L784,4 L784,12 L790,12 L790,20 L798,20 L798,28 L808,28 L808,38 L820,38 L820,48 L834,48 L834,60 L848,60 L848,72 L864,72 L864,85 L880,85 L880,98 L900,98 L900,110 L920,110 L920,122 L945,122 L945,134 L970,134 L970,145 L1000,145 L1000,155 L1040,155 L1040,165 L1090,165 L1090,175 L1150,175 L1150,185 L1220,185 L1220,195 L1310,195 L1310,205 L1440,205 L1440,260 Z"/>
     </svg>
     <h2>Ready to <em>grow?</em></h2>
     <p>Book a free, no-pressure consultation with our Cleveland team. We'd love to hear about your business.</p>
     <button class="btn-light" onclick="showPage('contact')">Schedule Your Free Call</button>
   </div>
 </div>
-
-<!-- ABOUT -->
 <div class="page" id="page-about">
   <section class="section-white">
     <div class="section-label">Our Story</div>
@@ -655,7 +767,7 @@
       </div>
       <div class="contact-form-wrap">
         <h3>Send Us a Message</h3>
-        <form id="contactForm" action="https://formspree.io/f/xqennejy" method="POST" onsubmit="handleSubmit(event)">
+        <form id="contactForm" action="https://formspree.io/f/contact@edgewaterwebdesign.com" method="POST" onsubmit="handleSubmit(event)">
           <!-- Formspree redirect override — stay on page -->
           <input type="hidden" name="_subject" value="New inquiry from Edgewater Web Design website">
           <input type="hidden" name="_next" value="">
@@ -693,6 +805,13 @@
 </footer>
 
 <script>
+  function toggleFaq(id) {
+    const item = document.getElementById(id);
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(el => el.classList.remove('open'));
+    if (!isOpen) item.classList.add('open');
+  }
+
   function showPage(id) {
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
     document.getElementById('page-' + id).classList.add('active');
@@ -711,7 +830,7 @@
     btn.textContent = 'Sending…';
     btn.disabled = true;
     try {
-      const response = await fetch('https://formspree.io/f/xqennejy', {
+      const response = await fetch('https://formspree.io/f/contact@edgewaterwebdesign.com', {
         method: 'POST',
         body: new FormData(form),
         headers: { 'Accept': 'application/json' }
