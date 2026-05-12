@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Edgewater Web Design | Cleveland, Ohio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,700;0,800;1,700;1,800&family=Nunito+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --sand: #E4C3AD;
+    --sand2: #EDD5C5;
+    --sand3: #F5E8DF;
+    --navy: #0D1F2D;
+    --navy2: #132433;
+    --navy3: #1c3040;
+    --blush: #FAE1DF;
+    --steel: #546A7B;
+    --muted: #7a6a61;
+    --border: rgba(13,31,45,0.14);
+    --border-light: rgba(13,31,45,0.08);
+    --font-display: 'Playfair Display', serif;
+    --font-body: 'Nunito', sans-serif;
+    --font-ui: 'Nunito Sans', sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--sand3);
+    color: var(--navy);
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 3rem; height: 68px;
+    background: rgba(228,195,173,0.95);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo {
+    text-decoration: none;
+    display: flex; align-items: center;
+  }
+  .nav-logo img {
+    height: 52px; width: auto;
+  }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    color: var(--steel); text-decoration: none;
+    font-family: var(--font-ui); font-size: 0.875rem; font-weight: 600;
+    letter-spacing: 0.02em; transition: color 0.2s; cursor: pointer;
+  }
+  .nav-links a:hover, .nav-links a.active { color: var(--navy); }
+  .nav-cta {
+    background: var(--navy) !important; color: var(--sand) !important;
+    padding: 8px 20px; border-radius: 24px; font-weight: 700 !important;
+    transition: background 0.2s, transform 0.15s !important;
+  }
+  .nav-cta:hover { background: var(--steel) !important; transform: translateY(-1px); }
+  .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+  .hamburger span { display: block; width: 24px; height: 2px; background: var(--navy); }
+
+  .hero-logo {
+    height: 130px; width: auto;
+    margin-bottom: 1.25rem;
+    display: block;
+    border-radius: 16px;
+  }
+
+  /* PAGES */
+  .page { display: none; min-height: 100vh; padding-top: 68px; }
+  .page.active { display: block; }
+
+  /* HERO */
+  .hero {
+    position: relative;
+    min-height: calc(100vh - 68px);
+    display: flex; align-items: center;
+    padding: 5rem 3rem 0; overflow: hidden;
+    background: linear-gradient(170deg, var(--sand) 0%, var(--sand3) 65%);
+  }
+  .hero-skyline {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    width: 100%; height: 52%; pointer-events: none; opacity: 0.11;
+  }
+  .hero-content { position: relative; z-index: 2; max-width: 680px; padding-bottom: 5rem; }
+  .hero-eyebrow {
+    font-family: var(--font-ui); font-size: 0.78rem; color: var(--steel);
+    letter-spacing: 0.18em; text-transform: uppercase; font-weight: 700;
+    margin-bottom: 1.25rem; display: flex; align-items: center; gap: 10px;
+  }
+  .hero-eyebrow::before {
+    content: ''; display: block; width: 30px; height: 2px;
+    background: var(--steel); border-radius: 2px;
+  }
+  .hero h1 {
+    font-family: var(--font-display);
+    font-size: clamp(3rem, 8vw, 6.5rem);
+    line-height: 1.06; font-weight: 800;
+    margin-bottom: 1.5rem; color: var(--navy);
+  }
+  .hero h1 em { font-style: italic; color: var(--steel); }
+  .hero-sub {
+    font-size: 1.15rem; color: var(--muted);
+    max-width: 480px; margin-bottom: 2.5rem; line-height: 1.75;
+  }
+  .hero-sub strong { color: var(--navy); font-weight: 700; }
+  .btn-group { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+  .btn-primary {
+    background: var(--navy); color: var(--sand);
+    padding: 14px 30px; border: none; border-radius: 32px;
+    font-family: var(--font-ui); font-size: 0.9rem; font-weight: 700;
+    cursor: pointer; transition: transform 0.15s, background 0.2s, box-shadow 0.2s;
+    text-decoration: none; display: inline-block;
+    box-shadow: 0 4px 18px rgba(13,31,45,0.18);
+  }
+  .btn-primary:hover { background: var(--steel); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(13,31,45,0.22); }
+  .btn-outline {
+    background: transparent; color: var(--navy);
+    padding: 13px 30px; border: 2px solid var(--navy); border-radius: 32px;
+    font-family: var(--font-ui); font-size: 0.9rem; font-weight: 700;
+    cursor: pointer; transition: border-color 0.2s, color 0.2s, background 0.2s;
+    text-decoration: none; display: inline-block;
+  }
+  .btn-outline:hover { background: var(--navy); color: var(--sand); }
+
+  .hero-stats {
+    display: flex; gap: 3rem; margin-top: 4rem;
+    padding-top: 2.5rem; border-top: 1px solid var(--border);
+  }
+  .stat-num {
+    font-family: var(--font-display); font-size: 2.2rem; font-weight: 700;
+    color: var(--navy); line-height: 1; margin-bottom: 0.15rem;
+  }
+  .stat-label {
+    font-size: 0.72rem; color: var(--muted); text-transform: uppercase;
+    letter-spacing: 0.1em; font-family: var(--font-ui); font-weight: 600;
+  }
+
+  /* SECTIONS */
+  section { padding: 7rem 3rem; }
+  .section-white { background: white; }
+  .section-alt { background: var(--sand); }
+
+  .section-label {
+    font-family: var(--font-ui); font-size: 0.72rem; color: var(--steel);
+    letter-spacing: 0.2em; text-transform: uppercase; font-weight: 700;
+    margin-bottom: 0.75rem; display: flex; align-items: center; gap: 10px;
+  }
+  .section-label::before {
+    content: ''; display: block; width: 22px; height: 2px;
+    background: var(--steel); border-radius: 2px;
+  }
+  h2.section-title {
+    font-family: var(--font-display); font-size: clamp(2rem, 4.5vw, 3.4rem);
+    line-height: 1.1; font-weight: 800; margin-bottom: 1.25rem; color: var(--navy);
+  }
+  h2.section-title em { font-style: italic; color: var(--steel); }
+  .section-intro {
+    color: var(--muted); max-width: 520px; margin-bottom: 3.5rem;
+    font-size: 1.05rem; line-height: 1.75;
+  }
+
+  /* SERVICES */
+  .services-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.25rem;
+  }
+  .service-card {
+    background: white; border: 1px solid var(--border-light); border-radius: 16px;
+    padding: 2.5rem 2rem; position: relative; overflow: hidden;
+    transition: transform 0.25s, box-shadow 0.25s;
+    box-shadow: 0 2px 12px rgba(13,31,45,0.06);
+  }
+  .service-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(13,31,45,0.12); }
+  .service-icon {
+    width: 48px; height: 48px; background: var(--sand3); border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.4rem; margin-bottom: 1.25rem;
+  }
+  .service-number {
+    font-family: var(--font-display); font-size: 4.5rem; font-weight: 800;
+    color: rgba(13,31,45,0.04); position: absolute; right: 1.25rem; top: 0.75rem;
+    line-height: 1; pointer-events: none;
+  }
+  .service-card h3 { font-family: var(--font-display); font-size: 1.35rem; font-weight: 700; margin-bottom: 0.6rem; color: var(--navy); }
+  .service-card p { color: var(--muted); font-size: 0.95rem; line-height: 1.65; }
+  .service-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 1.25rem; }
+  .tag {
+    font-family: var(--font-ui); font-size: 0.7rem; font-weight: 600;
+    color: var(--steel); background: var(--sand3);
+    border: 1px solid rgba(84,106,123,0.2); padding: 3px 10px; border-radius: 20px; letter-spacing: 0.03em;
+  }
+
+  /* PROCESS */
+  .process-steps {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  }
+  .process-step {
+    padding: 2.5rem 2rem; background: white;
+    border-top: 1px solid var(--border-light); border-bottom: 1px solid var(--border-light); border-right: 1px solid var(--border-light);
+  }
+  .process-step:first-child { border-left: 1px solid var(--border-light); border-radius: 16px 0 0 16px; }
+  .process-step:last-child { border-radius: 0 16px 16px 0; }
+  .step-num { font-family: var(--font-display); font-size: 3rem; font-weight: 800; color: var(--sand); line-height: 1; margin-bottom: 0.75rem; }
+  .process-step h3 { font-family: var(--font-display); font-size: 1.15rem; font-weight: 700; margin-bottom: 0.4rem; color: var(--navy); }
+  .process-step p { color: var(--muted); font-size: 0.875rem; }
+
+  /* CTA BAND */
+  .cta-band {
+    background: var(--navy); padding: 5.5rem 3rem; text-align: center; position: relative; overflow: hidden;
+  }
+  .cta-skyline {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    width: 100%; height: 65%; opacity: 0.05; pointer-events: none;
+  }
+  .cta-band h2 {
+    font-family: var(--font-display); font-size: clamp(2rem, 4vw, 3.5rem); font-weight: 800;
+    color: var(--sand); line-height: 1.1; margin-bottom: 1.25rem; position: relative;
+  }
+  .cta-band h2 em { font-style: italic; color: var(--blush); }
+  .cta-band p { color: rgba(228,195,173,0.6); max-width: 440px; margin: 0 auto 2.5rem; font-size: 1.05rem; position: relative; }
+  .btn-light {
+    background: var(--sand); color: var(--navy); padding: 14px 36px;
+    border: none; border-radius: 32px; font-family: var(--font-ui); font-size: 0.9rem; font-weight: 700;
+    cursor: pointer; transition: transform 0.15s, background 0.2s; position: relative;
+  }
+  .btn-light:hover { background: var(--blush); transform: translateY(-2px); }
+
+  /* ABOUT */
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start; }
+  .about-box {
+    background: white; border: 1px solid var(--border-light); border-radius: 16px; padding: 2.5rem;
+    box-shadow: 0 4px 20px rgba(13,31,45,0.07);
+  }
+  .about-box-label { font-family: var(--font-ui); font-size: 0.72rem; font-weight: 700; color: var(--steel); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 0.5rem; }
+  .about-box-stat { font-family: var(--font-display); font-size: 3rem; font-weight: 700; color: var(--navy); }
+  .about-box-sub { color: var(--muted); font-size: 0.9rem; margin-top: 0.25rem; }
+  .about-stat-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1.25rem; }
+  .about-stat-cell { background: var(--sand3); border-radius: 12px; padding: 1.25rem; border: 1px solid var(--border-light); }
+  .about-stat-cell .num { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; color: var(--navy); line-height: 1; }
+  .about-stat-cell .label { font-size: 0.78rem; color: var(--muted); font-family: var(--font-ui); font-weight: 600; margin-top: 0.2rem; }
+  .about-text p { color: var(--muted); margin-bottom: 1.25rem; line-height: 1.75; }
+  .about-text p strong { color: var(--navy); font-weight: 700; }
+  .values-list { margin-top: 2rem; display: flex; flex-direction: column; gap: 0.875rem; }
+  .value-item {
+    display: flex; align-items: flex-start; gap: 1rem; padding: 1.25rem 1.5rem;
+    border: 1px solid var(--border-light); border-radius: 12px; background: white;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .value-item:hover { border-color: var(--steel); box-shadow: 0 4px 16px rgba(13,31,45,0.08); }
+  .value-icon { width: 36px; height: 36px; flex-shrink: 0; background: var(--sand3); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1rem; margin-top: 2px; }
+  .value-text h4 { font-size: 0.95rem; font-weight: 700; margin-bottom: 0.2rem; color: var(--navy); }
+  .value-text p { font-size: 0.85rem; color: var(--muted); margin: 0; }
+
+  /* TEAM */
+  .team-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; margin-top: 3rem; }
+  .team-card {
+    background: white; border: 1px solid var(--border-light); border-radius: 20px;
+    padding: 2.5rem 2rem; text-align: center;
+    transition: transform 0.25s, box-shadow 0.25s;
+    box-shadow: 0 2px 12px rgba(13,31,45,0.06);
+  }
+  .team-card:hover { transform: translateY(-4px); box-shadow: 0 14px 36px rgba(13,31,45,0.12); }
+  .team-avatar {
+    width: 86px; height: 86px; border-radius: 50%; margin: 0 auto 1.25rem;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-display); font-size: 1.5rem; font-weight: 700;
+    border: 3px solid var(--sand);
+  }
+  .avatar-r { background: var(--sand3); color: var(--navy); }
+  .avatar-b { background: rgba(84,106,123,0.12); color: var(--steel); }
+  .avatar-ry { background: var(--blush); color: var(--navy2); }
+  .team-name { font-family: var(--font-display); font-size: 1.5rem; font-weight: 700; margin-bottom: 0.2rem; color: var(--navy); }
+  .team-role { font-family: var(--font-ui); font-size: 0.72rem; font-weight: 700; color: var(--steel); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 1rem; }
+  .team-bio { color: var(--muted); font-size: 0.9rem; line-height: 1.65; }
+
+  /* WORK */
+  .work-feature {
+    display: grid; grid-template-columns: 1fr 1fr; border-radius: 20px; overflow: hidden;
+    border: 1px solid var(--border-light); box-shadow: 0 8px 32px rgba(13,31,45,0.1); margin-bottom: 2rem;
+  }
+  .work-visual {
+    background: linear-gradient(135deg, var(--sand) 0%, var(--sand2) 100%);
+    min-height: 380px; display: flex; align-items: center; justify-content: center; padding: 3rem;
+  }
+  .browser-mock {
+    background: white; border: 1px solid var(--border-light); border-radius: 10px 10px 0 0;
+    width: 100%; max-width: 400px; box-shadow: 0 16px 48px rgba(13,31,45,0.18);
+  }
+  .browser-bar {
+    background: var(--sand3); padding: 10px 14px; display: flex; align-items: center; gap: 7px;
+    border-radius: 10px 10px 0 0; border-bottom: 1px solid var(--border-light);
+  }
+  .browser-dot { width: 10px; height: 10px; border-radius: 50%; }
+  .d1 { background: #ff5f57; } .d2 { background: #febc2e; } .d3 { background: #28c840; }
+  .browser-url {
+    flex: 1; background: white; border-radius: 4px; padding: 4px 10px;
+    font-family: var(--font-ui); font-size: 0.68rem; font-weight: 600; color: var(--muted);
+    margin-left: 6px; border: 1px solid var(--border-light);
+  }
+  .browser-content { padding: 1.25rem; }
+  .browser-hero-mock {
+    background: linear-gradient(135deg, #1a0a00, #2d1500); height: 90px; border-radius: 6px;
+    margin-bottom: 1rem; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 5px;
+  }
+  .mock-pizza-title { font-family: var(--font-display); font-size: 1.1rem; font-weight: 700; color: #f5a623; letter-spacing: 0.08em; }
+  .mock-pizza-sub { font-size: 0.58rem; color: rgba(245,166,35,0.5); font-family: var(--font-ui); letter-spacing: 0.1em; text-transform: uppercase; }
+  .browser-nav-mock { display: flex; gap: 8px; margin-bottom: 0.875rem; }
+  .nav-pill { height: 5px; background: var(--sand3); border-radius: 3px; }
+  .browser-blocks { display: flex; gap: 8px; }
+  .block { height: 44px; background: var(--sand3); border-radius: 5px; flex: 1; }
+  .work-info { background: white; padding: 3.5rem; display: flex; flex-direction: column; justify-content: center; }
+  .work-client { font-family: var(--font-ui); font-size: 0.72rem; font-weight: 700; color: var(--steel); letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 0.75rem; }
+  .work-info h3 { font-family: var(--font-display); font-size: 2.2rem; font-weight: 700; margin-bottom: 0.875rem; color: var(--navy); }
+  .work-info p { color: var(--muted); margin-bottom: 1.5rem; line-height: 1.7; }
+  .work-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 1.75rem; }
+  .work-link { display: inline-flex; align-items: center; gap: 8px; color: var(--navy); font-family: var(--font-ui); font-size: 0.85rem; font-weight: 700; text-decoration: none; transition: gap 0.2s, color 0.2s; }
+  .work-link:hover { gap: 14px; color: var(--steel); }
+  .work-link::after { content: '→'; }
+  .more-coming { margin-top: 3rem; padding: 3rem; border: 2px dashed rgba(13,31,45,0.12); border-radius: 16px; text-align: center; background: white; }
+  .more-coming p { color: var(--muted); }
+  .more-coming strong { color: var(--navy); font-weight: 700; }
+
+  /* CONTACT */
+  .contact-layout { display: grid; grid-template-columns: 1fr 1.4fr; gap: 4rem; align-items: start; }
+  .contact-info h3 { font-family: var(--font-display); font-size: 1.5rem; font-weight: 700; margin-bottom: 2rem; color: var(--navy); }
+  .contact-item { display: flex; align-items: flex-start; gap: 1rem; margin-bottom: 1.5rem; }
+  .contact-icon {
+    width: 42px; height: 42px; border-radius: 12px; background: white;
+    border: 1px solid var(--border-light); display: flex; align-items: center; justify-content: center;
+    color: var(--navy); flex-shrink: 0; font-size: 1.1rem; box-shadow: 0 2px 8px rgba(13,31,45,0.06);
+  }
+  .contact-item-text .label { font-family: var(--font-ui); font-size: 0.68rem; font-weight: 700; color: var(--muted); letter-spacing: 0.12em; text-transform: uppercase; display: block; margin-bottom: 2px; }
+  .contact-item-text a, .contact-item-text span { color: var(--navy); text-decoration: none; font-size: 0.95rem; font-weight: 500; transition: color 0.2s; }
+  .contact-item-text a:hover { color: var(--steel); }
+  .contact-form-wrap { background: white; border: 1px solid var(--border-light); border-radius: 20px; padding: 3rem; box-shadow: 0 4px 24px rgba(13,31,45,0.08); }
+  .contact-form-wrap h3 { font-family: var(--font-display); font-size: 1.6rem; font-weight: 700; margin-bottom: 1.75rem; color: var(--navy); }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .form-group { margin-bottom: 1rem; }
+  .form-group label { display: block; font-family: var(--font-ui); font-size: 0.72rem; font-weight: 700; color: var(--steel); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 5px; }
+  .form-group input, .form-group textarea, .form-group select {
+    width: 100%; background: var(--sand3); border: 1.5px solid var(--border-light);
+    color: var(--navy); padding: 11px 14px; font-family: var(--font-body); font-size: 0.95rem;
+    outline: none; transition: border-color 0.2s, box-shadow 0.2s; border-radius: 10px;
+  }
+  .form-group input::placeholder, .form-group textarea::placeholder { color: #b5a89e; }
+  .form-group input:focus, .form-group textarea:focus, .form-group select:focus { border-color: var(--steel); box-shadow: 0 0 0 3px rgba(84,106,123,0.12); }
+  .form-group select option { background: white; color: var(--navy); }
+  .form-group textarea { resize: vertical; min-height: 110px; }
+  .form-submit { width: 100%; background: var(--navy); color: var(--sand); border: none; padding: 14px; font-family: var(--font-ui); font-size: 0.9rem; font-weight: 700; cursor: pointer; transition: background 0.2s, transform 0.15s; margin-top: 0.5rem; border-radius: 32px; letter-spacing: 0.04em; }
+  .form-submit:hover { background: var(--steel); transform: translateY(-1px); }
+  .form-success { display: none; text-align: center; padding: 2.5rem; color: var(--navy); font-family: var(--font-display); font-size: 1.5rem; font-weight: 700; }
+  .form-success p { color: var(--muted); font-family: var(--font-body); font-size: 1rem; margin-top: 0.75rem; }
+
+  /* FOOTER */
+  footer { background: var(--navy); padding: 2.5rem 3rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
+  .footer-brand { font-family: var(--font-display); font-size: 1.2rem; font-weight: 700; color: var(--sand); }
+  .footer-brand span { color: rgba(228,195,173,0.4); }
+  .footer-copy { font-size: 0.8rem; color: rgba(228,195,173,0.38); font-family: var(--font-ui); font-weight: 600; }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
+  .fade-up { animation: fadeUp 0.6s ease both; }
+  .delay-1 { animation-delay: 0.1s; } .delay-2 { animation-delay: 0.2s; }
+  .delay-3 { animation-delay: 0.3s; } .delay-4 { animation-delay: 0.4s; }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    nav { padding: 0 1.5rem; }
+    .nav-links { display: none; }
+    .nav-links.open { display: flex; flex-direction: column; position: fixed; top: 68px; left: 0; right: 0; background: var(--sand); border-bottom: 1px solid var(--border); padding: 1.5rem; gap: 1.25rem; }
+    .hamburger { display: flex; }
+    section { padding: 4rem 1.5rem; }
+    .hero { padding: 4rem 1.5rem 0; }
+    .hero-stats { gap: 1.5rem; flex-wrap: wrap; }
+    .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+    .work-feature { grid-template-columns: 1fr; }
+    .work-visual { min-height: 220px; }
+    .contact-layout { grid-template-columns: 1fr; gap: 2.5rem; }
+    .form-row { grid-template-columns: 1fr; }
+    .process-step:first-child { border-radius: 16px 16px 0 0; }
+    .process-step:last-child { border-radius: 0 0 16px 16px; }
+    footer { flex-direction: column; text-align: center; padding: 2rem 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="#" onclick="showPage('home')">
+    <img src="logo.png" alt="Edgewater Web Design">
+  </a>
+  <ul class="nav-links" id="navLinks">
+    <li><a onclick="showPage('home')" data-page="home" class="active">Home</a></li>
+    <li><a onclick="showPage('about')" data-page="about">About</a></li>
+    <li><a onclick="showPage('services')" data-page="services">Services</a></li>
+    <li><a onclick="showPage('work')" data-page="work">Work</a></li>
+    <li><a onclick="showPage('contact')" data-page="contact" class="nav-cta">Get Started</a></li>
+  </ul>
+  <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- HOME -->
+<div class="page active" id="page-home">
+  <div class="hero">
+    <!-- Cleveland Skyline -->
+    <svg class="hero-skyline" viewBox="0 0 1440 300" preserveAspectRatio="xMidYMax meet" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#0D1F2D" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round">
+      <!-- Key Tower (tallest) -->
+      <polyline points="716,300 716,52 722,52 722,42 724,42 724,32 727,32 727,22 730,22 730,10 733,10 733,22 736,22 736,32 738,32 738,42 740,42 740,52 746,52 746,300"/>
+      <line x1="730" y1="10" x2="730" y2="0"/><line x1="727" y1="5" x2="733" y2="5"/>
+      <!-- 200 Public Square -->
+      <polyline points="658,300 658,82 662,82 664,72 668,66 672,72 674,82 678,82 678,300"/>
+      <line x1="668" y1="66" x2="668" y2="55"/>
+      <!-- Huntington Building -->
+      <polyline points="758,300 758,78 762,78 768,68 774,62 780,68 784,78 788,78 788,300"/>
+      <line x1="774" y1="62" x2="774" y2="50"/>
+      <!-- 55 Public Square -->
+      <polyline points="620,300 620,104 630,104 630,96 642,96 642,104 652,104 652,300"/>
+      <!-- One Cleveland Center -->
+      <polyline points="582,300 582,118 592,118 592,110 604,110 604,118 614,118 614,300"/>
+      <!-- Ernst & Young -->
+      <polyline points="800,300 800,124 808,124 808,116 818,116 818,124 828,124 828,300"/>
+      <!-- Fifth Third Center -->
+      <polyline points="836,300 836,138 844,138 844,130 854,130 854,138 864,138 864,300"/>
+      <!-- PNC stepped -->
+      <polyline points="542,300 542,134 546,134 546,126 550,126 550,118 556,118 556,126 560,126 560,134 564,134 564,300"/>
+      <!-- Sherwin Williams -->
+      <polyline points="492,300 492,150 500,150 500,142 512,142 512,150 520,150 520,300"/>
+      <!-- Mid-rises right -->
+      <polyline points="872,300 872,150 886,150 886,142 902,142 902,150 918,300"/>
+      <polyline points="928,300 928,162 950,162 950,300"/>
+      <polyline points="958,300 958,170 976,170 976,162 994,162 994,170 1012,300"/>
+      <polyline points="1020,300 1020,178 1046,178 1046,300"/>
+      <polyline points="1054,300 1054,186 1078,186 1078,300"/>
+      <polyline points="1086,300 1086,194 1112,194 1112,300"/>
+      <!-- Mid-rises left -->
+      <polyline points="448,300 448,158 464,158 464,150 480,150 480,158 490,158"/>
+      <polyline points="400,300 400,168 418,168 418,300"/>
+      <polyline points="358,300 358,178 376,178 376,300"/>
+      <polyline points="312,300 312,188 332,188 332,300"/>
+      <polyline points="264,300 264,196 286,196 286,300"/>
+      <!-- Far edges -->
+      <polyline points="214,300 214,210 260,210"/>
+      <polyline points="1120,210 1160,210 1160,300"/>
+      <polyline points="160,300 160,228 214,228"/>
+      <polyline points="1200,228 1248,228 1248,300"/>
+      <line x1="0" y1="300" x2="1440" y2="300"/>
+    </svg>
+
+    <div class="hero-content">
+      <img src="logo.png" alt="Edgewater Web Design" class="hero-logo fade-up">
+      <div class="hero-eyebrow fade-up delay-1">Cleveland, Ohio · Est. May 2026</div>
+      <h1 class="fade-up delay-2">Your site,<br><em>built right.</em></h1>
+      <p class="hero-sub fade-up delay-3">We craft <strong>beautiful websites</strong> and <strong>smart SEO</strong> for small businesses ready to stand out. No templates. No fluff. Just real results.</p>
+      <div class="btn-group fade-up delay-4">
+        <button class="btn-primary" onclick="showPage('contact')">Book a Free Consultation</button>
+        <button class="btn-outline" onclick="showPage('work')">See Our Work</button>
+      </div>
+      <div class="hero-stats fade-up delay-4">
+        <div><div class="stat-num">100%</div><div class="stat-label">Custom Design</div></div>
+        <div><div class="stat-num">SEO</div><div class="stat-label">Built In From Day One</div></div>
+        <div><div class="stat-num">CLE</div><div class="stat-label">Based In Cleveland</div></div>
+      </div>
+    </div>
+  </div>
+
+  <section class="section-white">
+    <div class="section-label">What We Do</div>
+    <h2 class="section-title">Web Design <em>&amp; Marketing</em></h2>
+    <p class="section-intro">Everything your small business needs to thrive online — under one roof, from a team that genuinely cares.</p>
+    <div class="services-grid">
+      <div class="service-card"><div class="service-number">01</div><div class="service-icon">🎨</div><h3>Web Design</h3><p>Bespoke sites built from scratch. Pixel-perfect, mobile-first, and built to convert visitors into customers.</p><div class="service-tags"><span class="tag">Custom Design</span><span class="tag">Responsive</span><span class="tag">CMS</span></div></div>
+      <div class="service-card"><div class="service-number">02</div><div class="service-icon">🔍</div><h3>Advanced SEO</h3><p>Get found by the right people at the right time. We build SEO into every line of code — not as an afterthought.</p><div class="service-tags"><span class="tag">Technical SEO</span><span class="tag">Local SEO</span><span class="tag">Content</span></div></div>
+      <div class="service-card"><div class="service-number">03</div><div class="service-icon">📈</div><h3>Digital Marketing</h3><p>Strategy, campaigns, and execution. We help small businesses compete and win in their local markets.</p><div class="service-tags"><span class="tag">Google Ads</span><span class="tag">Social</span><span class="tag">Analytics</span></div></div>
+    </div>
+  </section>
+
+  <section class="section-alt">
+    <div class="section-label">How It Works</div>
+    <h2 class="section-title">A simple, <em>friendly process</em></h2>
+    <p class="section-intro">We keep things clear and collaborative every step of the way.</p>
+    <div class="process-steps">
+      <div class="process-step"><div class="step-num">01</div><h3>Discovery Call</h3><p>We learn your business, goals, and audience inside out.</p></div>
+      <div class="process-step"><div class="step-num">02</div><h3>Strategy &amp; Design</h3><p>A custom plan and design direction crafted for your brand.</p></div>
+      <div class="process-step"><div class="step-num">03</div><h3>Build &amp; Optimize</h3><p>Development with SEO baked in from the very first line.</p></div>
+      <div class="process-step"><div class="step-num">04</div><h3>Launch &amp; Grow</h3><p>Go live and keep climbing with ongoing support and marketing.</p></div>
+    </div>
+  </section>
+
+  <div class="cta-band">
+    <svg class="cta-skyline" viewBox="0 0 1440 280" preserveAspectRatio="xMidYMax meet" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#E4C3AD" stroke-width="1.5" stroke-linejoin="round">
+      <polyline points="716,280 716,40 730,20 730,8 744,40 746,280"/>
+      <line x1="730" y1="8" x2="730" y2="0"/>
+      <polyline points="658,280 658,68 668,55 678,68 678,280"/>
+      <polyline points="758,280 758,65 774,50 790,65 790,280"/>
+      <polyline points="620,280 620,92 642,92 642,280"/><polyline points="800,280 800,108 822,108 822,280"/>
+      <polyline points="582,280 582,112 604,112 604,280"/><polyline points="836,280 836,128 858,128 858,280"/>
+      <polyline points="870,280 870,148 900,280"/><polyline points="542,280 542,130 558,280"/>
+      <polyline points="490,280 490,155 515,280"/><polyline points="930,280 930,165 960,280"/>
+      <polyline points="440,280 440,168 470,280"/><polyline points="972,280 972,178 1010,280"/>
+      <polyline points="390,280 390,182 420,280"/><polyline points="1020,280 1020,188 1060,280"/>
+      <polyline points="320,280 320,198 360,280"/><polyline points="1070,280 1070,200 1110,280"/>
+      <line x1="0" y1="280" x2="1440" y2="280"/>
+    </svg>
+    <h2>Ready to <em>grow?</em></h2>
+    <p>Book a free, no-pressure consultation with our Cleveland team. We'd love to hear about your business.</p>
+    <button class="btn-light" onclick="showPage('contact')">Schedule Your Free Call</button>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<div class="page" id="page-about">
+  <section class="section-white">
+    <div class="section-label">Our Story</div>
+    <h2 class="section-title">Built in <em>Cleveland</em></h2>
+    <div class="about-grid">
+      <div>
+        <div class="about-box">
+          <div class="about-box-label">Founded</div>
+          <div class="about-box-stat">May 2026</div>
+          <div class="about-box-sub">Right here in Cleveland, Ohio</div>
+          <div class="about-stat-row">
+            <div class="about-stat-cell"><div class="num">3</div><div class="label">Expert Team Members</div></div>
+            <div class="about-stat-cell"><div class="num">∞</div><div class="label">Passion for the Craft</div></div>
+            <div class="about-stat-cell"><div class="num">1</div><div class="label">Happy Client (and counting)</div></div>
+            <div class="about-stat-cell"><div class="num">CLE</div><div class="label">Proudly Local</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="about-text">
+        <p>Edgewater Web Design was born from a simple belief: <strong>every small business deserves a world-class website.</strong> Too often, local businesses are stuck with cookie-cutter templates and outdated SEO.</p>
+        <p>We're a tight-knit team of three based out of Cleveland, Ohio — and we take that local pride seriously. We understand the Northeast Ohio market and what it takes to help a small business thrive here.</p>
+        <p>From our first client, <strong>A Slice Above Pizza in Strongsville</strong>, we've been laser-focused on delivering real results: beautiful designs that convert, and SEO strategies that get you found.</p>
+        <div class="values-list">
+          <div class="value-item"><div class="value-icon">🤝</div><div class="value-text"><h4>Transparency</h4><p>No jargon, no surprises. You'll always know exactly what we're doing and why.</p></div></div>
+          <div class="value-item"><div class="value-icon">🎯</div><div class="value-text"><h4>Results-First</h4><p>Beautiful design is only half the equation. We build sites that drive real business growth.</p></div></div>
+          <div class="value-item"><div class="value-icon">📍</div><div class="value-text"><h4>Local Commitment</h4><p>We're invested in Cleveland's small business community — your success is our success.</p></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-alt">
+    <div class="section-label">The Team</div>
+    <h2 class="section-title">The people <em>behind the work</em></h2>
+    <p class="section-intro">A small team with a big vision — and the skills to back it up.</p>
+    <div class="team-grid">
+      <div class="team-card"><div class="team-avatar avatar-r">RL</div><div class="team-name">Rylan</div><div class="team-role">Chief Executive Officer</div><p class="team-bio">Rylan leads Edgewater's vision and strategy. With a passion for empowering small businesses and a sharp eye for opportunity, he drives the company forward.</p></div>
+      <div class="team-card"><div class="team-avatar avatar-b">BX</div><div class="team-name">Braxton</div><div class="team-role">Chief Operating Officer</div><p class="team-bio">Braxton keeps the engine running. He oversees project delivery, client relationships, and operations — making sure every project launches on time and above expectations.</p></div>
+      <div class="team-card"><div class="team-avatar avatar-ry">RY</div><div class="team-name">Ryan</div><div class="team-role">Chief Marketing Officer</div><p class="team-bio">Ryan is the growth engine. From SEO architecture to digital campaigns, he crafts marketing strategies that put our clients' businesses in front of the right audiences.</p></div>
+    </div>
+  </section>
+
+  <div class="cta-band">
+    <svg class="cta-skyline" viewBox="0 0 1440 280" preserveAspectRatio="xMidYMax meet" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#E4C3AD" stroke-width="1.5" stroke-linejoin="round">
+      <polyline points="716,280 716,40 730,20 730,8 744,40 746,280"/><line x1="730" y1="8" x2="730" y2="0"/>
+      <polyline points="658,280 658,68 668,55 678,68 678,280"/><polyline points="758,280 758,65 774,50 790,65 790,280"/>
+      <polyline points="620,280 620,92 642,92 642,280"/><polyline points="800,280 800,108 822,108 822,280"/>
+      <line x1="0" y1="280" x2="1440" y2="280"/>
+    </svg>
+    <h2>Let's build <em>something.</em></h2>
+    <p>Reach out and tell us about your business. The first consultation is always free.</p>
+    <button class="btn-light" onclick="showPage('contact')">Contact the Team</button>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<div class="page" id="page-services">
+  <section class="section-white">
+    <div class="section-label">Services</div>
+    <h2 class="section-title">Everything <em>you need</em></h2>
+    <p class="section-intro">A focused suite of services designed to give small businesses the online presence they deserve — without the big-agency price tag.</p>
+    <div class="services-grid">
+      <div class="service-card"><div class="service-number">01</div><div class="service-icon">🎨</div><h3>Custom Web Design</h3><p>No templates. No shortcuts. Every site starts with a blank canvas and your business's unique story. We design for beauty, usability, and conversion.</p><div class="service-tags"><span class="tag">Brand Identity</span><span class="tag">UI/UX Design</span><span class="tag">Responsive</span><span class="tag">Mobile-First</span></div></div>
+      <div class="service-card"><div class="service-number">02</div><div class="service-icon">💻</div><h3>Web Development</h3><p>Clean, fast, and future-proof code. We build sites that load in a blink, work on every device, and scale as your business grows.</p><div class="service-tags"><span class="tag">Performance</span><span class="tag">Security</span><span class="tag">CMS</span><span class="tag">E-commerce</span></div></div>
+      <div class="service-card"><div class="service-number">03</div><div class="service-icon">🔍</div><h3>Advanced SEO</h3><p>We don't bolt on SEO after the fact. It's woven into every page, every heading, and every line of code — from day one.</p><div class="service-tags"><span class="tag">Technical SEO</span><span class="tag">Local SEO</span><span class="tag">Keyword Research</span><span class="tag">Analytics</span></div></div>
+      <div class="service-card"><div class="service-number">04</div><div class="service-icon">✍️</div><h3>Content Strategy</h3><p>Words matter. We help you find your voice and create content that connects with your audience and ranks for the right keywords.</p><div class="service-tags"><span class="tag">Copywriting</span><span class="tag">Blog Strategy</span><span class="tag">Brand Voice</span></div></div>
+      <div class="service-card"><div class="service-number">05</div><div class="service-icon">📈</div><h3>Digital Marketing</h3><p>From Google Ads to social media campaigns — we run data-driven marketing that puts your brand where your customers already are.</p><div class="service-tags"><span class="tag">Google Ads</span><span class="tag">Social Ads</span><span class="tag">Email Marketing</span></div></div>
+      <div class="service-card"><div class="service-number">06</div><div class="service-icon">🛠️</div><h3>Ongoing Support</h3><p>We don't disappear after launch. Maintenance, updates, monitoring, and growth consulting — we're your long-term digital partner.</p><div class="service-tags"><span class="tag">Maintenance</span><span class="tag">Hosting</span><span class="tag">Monthly Reports</span></div></div>
+    </div>
+  </section>
+  <div class="cta-band">
+    <svg class="cta-skyline" viewBox="0 0 1440 280" preserveAspectRatio="xMidYMax meet" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#E4C3AD" stroke-width="1.5" stroke-linejoin="round">
+      <polyline points="716,280 716,40 730,20 730,8 744,40 746,280"/><line x1="730" y1="8" x2="730" y2="0"/>
+      <polyline points="658,280 658,68 668,55 678,68 678,280"/><polyline points="758,280 758,65 774,50 790,65 790,280"/>
+      <line x1="0" y1="280" x2="1440" y2="280"/>
+    </svg>
+    <h2>What do <em>you need?</em></h2>
+    <p>Every business is different. Let's talk through what will make the biggest impact for you.</p>
+    <button class="btn-light" onclick="showPage('contact')">Get a Custom Quote</button>
+  </div>
+</div>
+
+<!-- WORK -->
+<div class="page" id="page-work">
+  <section class="section-white">
+    <div class="section-label">Our Work</div>
+    <h2 class="section-title">Client <em>Projects</em></h2>
+    <p class="section-intro">We're just getting started — and we're proud of every project we take on.</p>
+    <div class="work-feature">
+      <div class="work-visual">
+        <div class="browser-mock">
+          <div class="browser-bar"><div class="browser-dot d1"></div><div class="browser-dot d2"></div><div class="browser-dot d3"></div><div class="browser-url">asliceabovepizza.com</div></div>
+          <div class="browser-content">
+            <div class="browser-hero-mock"><div class="mock-pizza-title">A SLICE ABOVE</div><div class="mock-pizza-sub">Strongsville, Ohio · Premium Pizza</div></div>
+            <div class="browser-nav-mock"><div class="nav-pill" style="width:40px"></div><div class="nav-pill" style="width:52px"></div><div class="nav-pill" style="width:36px"></div><div class="nav-pill" style="width:46px"></div></div>
+            <div class="browser-blocks"><div class="block"></div><div class="block"></div><div class="block"></div></div>
+          </div>
+        </div>
+      </div>
+      <div class="work-info">
+        <div class="work-client">Client · Strongsville, Ohio</div>
+        <h3>A Slice Above</h3>
+        <p>A full website build for a premium local pizza restaurant in Strongsville. We created a custom site that captures their brand, showcases their menu, and is fully optimized for local SEO to drive foot traffic.</p>
+        <div class="work-tags"><span class="tag">Custom Design</span><span class="tag">Local SEO</span><span class="tag">Menu Integration</span><span class="tag">Mobile-First</span></div>
+        <a href="https://asliceabovepizza.com" class="work-link" target="_blank">Visit asliceabovepizza.com</a>
+      </div>
+    </div>
+    <div class="more-coming">
+      <p>We're a new agency — which means <strong>we're hungry.</strong> Your project could be featured right here. We give every client the same care and craft that we gave to our first.</p>
+      <br>
+      <button class="btn-primary" onclick="showPage('contact')" style="display:inline-block;">Become Our Next Project</button>
+    </div>
+  </section>
+</div>
+
+<!-- CONTACT -->
+<div class="page" id="page-contact">
+  <section class="section-alt">
+    <div class="section-label">Get In Touch</div>
+    <h2 class="section-title">Let's <em>talk.</em></h2>
+    <p class="section-intro">Ready to build something great? Reach out and we'll get back to you within one business day.</p>
+    <div class="contact-layout">
+      <div class="contact-info">
+        <h3>Edgewater Web Design</h3>
+        <div class="contact-item"><div class="contact-icon">✉</div><div class="contact-item-text"><span class="label">Email</span><a href="mailto:contact@edgewaterwebdesign.com">contact@edgewaterwebdesign.com</a></div></div>
+        <div class="contact-item"><div class="contact-icon">✆</div><div class="contact-item-text"><span class="label">Phone</span><a href="tel:5094166196">(509) 416-6196</a></div></div>
+        <div class="contact-item"><div class="contact-icon">📍</div><div class="contact-item-text"><span class="label">Location</span><span>Cleveland, Ohio</span></div></div>
+        <div class="contact-item"><div class="contact-icon">⏱</div><div class="contact-item-text"><span class="label">Response Time</span><span>Within 1 Business Day</span></div></div>
+        <div style="margin-top:2rem;padding:1.75rem;border:1px solid var(--border-light);border-radius:14px;background:white;box-shadow:0 2px 12px rgba(13,31,45,0.06);">
+          <div class="section-label" style="margin-bottom:0.5rem;">Free Consultation</div>
+          <p style="color:var(--muted);font-size:0.9rem;margin:0;line-height:1.65;">Every new project starts with a free, no-commitment discovery call. We'll learn about your business and tell you exactly what we'd do for you.</p>
+        </div>
+      </div>
+      <div class="contact-form-wrap">
+        <h3>Send Us a Message</h3>
+        <div id="contactForm">
+          <div class="form-row">
+            <div class="form-group"><label>First Name</label><input type="text" placeholder="John" id="fname"></div>
+            <div class="form-group"><label>Last Name</label><input type="text" placeholder="Smith" id="lname"></div>
+          </div>
+          <div class="form-group"><label>Email Address</label><input type="email" placeholder="john@yourbusiness.com" id="email"></div>
+          <div class="form-group"><label>Business Name</label><input type="text" placeholder="Your Business Name" id="business"></div>
+          <div class="form-group"><label>What Do You Need?</label><select id="service"><option value="">Select a Service...</option><option>New Website Design &amp; Development</option><option>SEO &amp; Digital Marketing</option><option>Website Redesign</option><option>Ongoing Marketing Support</option><option>Not Sure — Just Want to Talk</option></select></div>
+          <div class="form-group"><label>Tell Us About Your Project</label><textarea placeholder="Share some details about your business and what you're looking to achieve..." id="message"></textarea></div>
+          <button class="form-submit" onclick="submitForm()">Send Message →</button>
+        </div>
+        <div class="form-success" id="formSuccess">
+          Message Received! 🎉
+          <p>Thanks for reaching out! We'll be in touch within one business day.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<footer>
+  <img src="logo.png" alt="Edgewater Web Design" style="height:56px; width:auto; border-radius:8px;">
+  <div class="footer-copy">© 2026 Edgewater Web Design · Cleveland, Ohio · All Rights Reserved</div>
+</footer>
+
+<script>
+  function showPage(id) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById('page-' + id).classList.add('active');
+    document.querySelectorAll('.nav-links a').forEach(a => {
+      a.classList.toggle('active', a.getAttribute('data-page') === id);
+    });
+    window.scrollTo(0, 0);
+    document.getElementById('navLinks').classList.remove('open');
+  }
+  function toggleMenu() { document.getElementById('navLinks').classList.toggle('open'); }
+  function submitForm() {
+    const fname = document.getElementById('fname').value.trim();
+    const email = document.getElementById('email').value.trim();
+    if (!fname || !email) { alert('Please fill in at least your name and email.'); return; }
+    document.getElementById('contactForm').style.display = 'none';
+    document.getElementById('formSuccess').style.display = 'block';
+  }
+</script>
+</body>
+</html>
