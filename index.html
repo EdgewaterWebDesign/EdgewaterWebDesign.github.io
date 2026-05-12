@@ -655,17 +655,29 @@
       </div>
       <div class="contact-form-wrap">
         <h3>Send Us a Message</h3>
-        <div id="contactForm">
+        <form id="contactForm" action="https://formspree.io/f/contact@edgewaterwebdesign.com" method="POST" onsubmit="handleSubmit(event)">
+          <!-- Formspree redirect override — stay on page -->
+          <input type="hidden" name="_subject" value="New inquiry from Edgewater Web Design website">
+          <input type="hidden" name="_next" value="">
           <div class="form-row">
-            <div class="form-group"><label>First Name</label><input type="text" placeholder="John" id="fname"></div>
-            <div class="form-group"><label>Last Name</label><input type="text" placeholder="Smith" id="lname"></div>
+            <div class="form-group"><label for="fname">First Name</label><input type="text" name="first_name" placeholder="John" id="fname" required></div>
+            <div class="form-group"><label for="lname">Last Name</label><input type="text" name="last_name" placeholder="Smith" id="lname"></div>
           </div>
-          <div class="form-group"><label>Email Address</label><input type="email" placeholder="john@yourbusiness.com" id="email"></div>
-          <div class="form-group"><label>Business Name</label><input type="text" placeholder="Your Business Name" id="business"></div>
-          <div class="form-group"><label>What Do You Need?</label><select id="service"><option value="">Select a Service...</option><option>New Website Design &amp; Development</option><option>SEO &amp; Digital Marketing</option><option>Website Redesign</option><option>Ongoing Marketing Support</option><option>Not Sure — Just Want to Talk</option></select></div>
-          <div class="form-group"><label>Tell Us About Your Project</label><textarea placeholder="Share some details about your business and what you're looking to achieve..." id="message"></textarea></div>
-          <button class="form-submit" onclick="submitForm()">Send Message →</button>
-        </div>
+          <div class="form-group"><label for="email">Email Address</label><input type="email" name="email" placeholder="john@yourbusiness.com" id="email" required></div>
+          <div class="form-group"><label for="business">Business Name</label><input type="text" name="business_name" placeholder="Your Business Name" id="business"></div>
+          <div class="form-group"><label for="service">What Do You Need?</label>
+            <select id="service" name="service">
+              <option value="">Select a Service...</option>
+              <option>New Website Design &amp; Development</option>
+              <option>SEO &amp; Digital Marketing</option>
+              <option>Website Redesign</option>
+              <option>Ongoing Marketing Support</option>
+              <option>Not Sure — Just Want to Talk</option>
+            </select>
+          </div>
+          <div class="form-group"><label for="message">Tell Us About Your Project</label><textarea name="message" placeholder="Share some details about your business and what you're looking to achieve..." id="message"></textarea></div>
+          <button type="submit" class="form-submit" id="submitBtn">Send Message →</button>
+        </form>
         <div class="form-success" id="formSuccess">
           Message Received! 🎉
           <p>Thanks for reaching out! We'll be in touch within one business day.</p>
@@ -691,12 +703,34 @@
     document.getElementById('navLinks').classList.remove('open');
   }
   function toggleMenu() { document.getElementById('navLinks').classList.toggle('open'); }
-  function submitForm() {
-    const fname = document.getElementById('fname').value.trim();
-    const email = document.getElementById('email').value.trim();
-    if (!fname || !email) { alert('Please fill in at least your name and email.'); return; }
-    document.getElementById('contactForm').style.display = 'none';
-    document.getElementById('formSuccess').style.display = 'block';
+
+  async function handleSubmit(event) {
+    event.preventDefault();
+    const form = document.getElementById('contactForm');
+    const btn = document.getElementById('submitBtn');
+    btn.textContent = 'Sending…';
+    btn.disabled = true;
+    try {
+      const response = await fetch('https://formspree.io/f/contact@edgewaterwebdesign.com', {
+        method: 'POST',
+        body: new FormData(form),
+        headers: { 'Accept': 'application/json' }
+      });
+      if (response.ok) {
+        form.style.display = 'none';
+        document.getElementById('formSuccess').style.display = 'block';
+      } else {
+        const data = await response.json();
+        const msg = data.errors ? data.errors.map(e => e.message).join(', ') : 'Something went wrong. Please email us directly at contact@edgewaterwebdesign.com';
+        alert(msg);
+        btn.textContent = 'Send Message →';
+        btn.disabled = false;
+      }
+    } catch {
+      alert('Network error. Please email us directly at contact@edgewaterwebdesign.com');
+      btn.textContent = 'Send Message →';
+      btn.disabled = false;
+    }
   }
 </script>
 </body>
